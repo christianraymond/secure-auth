@@ -1,13 +1,17 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import { Todo, NavBar, Register } from "./components";
+import { Todo, NavBar, Register, Landing } from "./components";
 
 function App() {
   return (
     <Router>
+        <NavBar/>
       <div>
-         <NavBar/>
         <Switch>
+        <Route exact path="/">
+            <Landing />
+          </Route>
+
           <Route exact path="/register">
             <Register />
           </Route>

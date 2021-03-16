@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import RegisterForm from './RegisterForm';
 import { connect } from 'react-redux';
-import { userSignupRequestAction } from '../../actions/signupActions';
+import { userSignupRequestAction } from '../../actions/signupActions'
 
  class Register extends React.Component {
     render() {
