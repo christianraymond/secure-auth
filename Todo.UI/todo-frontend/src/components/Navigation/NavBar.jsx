@@ -8,6 +8,7 @@ export default () => {
       <div className="nav navbar-nav navbar-right">
         <u className="nav navbar-nav nav-right">
          <li><Link to="/register">Register</Link></li>
+         <li><Link to="/login">Login</Link></li>
         </u>
       </div>
     </nav>

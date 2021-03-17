@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { browserHistory } from "react-router";
+import history from '../../history'
 
 export default class RegisterForm extends Component {
   constructor(props) {
@@ -25,9 +25,13 @@ export default class RegisterForm extends Component {
     e.preventDefault();
     try {
       this.props.userSignupRequestAction(this.state)
-       .then((res) => {
-         console.log(res)
-         window.location.replace('/todo')
+       .then(() => {
+        this.props.addFlashMessage({
+          type: 'success',
+          text: 'You signed up successfully. Welcome!'
+        });
+        // this.context.router.push('/todo')
+        history.push('/todo')
        })
        .catch(error => {
          alert(error.message)
@@ -96,4 +100,9 @@ export default class RegisterForm extends Component {
 
 RegisterForm.propTypes = {
   userSignupRequestAction: PropTypes.func.isRequired,
+  addFlashMessage: PropTypes.func.isRequired
 };
+
+RegisterForm.contextType = {
+  router: PropTypes.object.isRequired
+}
