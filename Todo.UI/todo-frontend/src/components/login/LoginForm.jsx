@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { loginActions } from '../../actions/loginActions';
 import PropTypes from 'prop-types';
+import history from '../../history'
 
 class LoginForm extends Component {
     constructor(props) {
@@ -21,11 +22,8 @@ class LoginForm extends Component {
         try {
             this.props.loginActions(this.state)
                 .then(() => {
-                    this.props.addFlashMessage({
-                        type: 'success',
-                        text: 'Welcome!'
-                    });
-                    this.context.router.push('/todo')
+                    history.push('/todo')
+                    // window.location.replace('/todo')
                 })
                 .catch(error => {
                     alert(error.message)
@@ -40,7 +38,7 @@ class LoginForm extends Component {
     }
 
     render() {
-        const { username, email, password } = this.props;
+        const { username, email, password, error } = this.props;
         return (
             <form onSubmit={this.onSubmit}>
                 <h1 className="justify-content-center row">Login</h1>
