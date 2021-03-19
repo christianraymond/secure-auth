@@ -5,4 +5,5 @@ export { default as Todo } from '../components/todoList/Todo.jsx';
 export { default as Register } from '../components/register/Register.jsx';
 export { default as Landing } from './Landing';
 export { default as Login } from '../components/login/Login.jsx';
-export { default as FlashMessagesList } from '../components/flash/FlashMessagesList'
+export { default as FlashMessagesList } from '../components/flash/FlashMessagesList';
+export { default as ProtectRoute } from '../utils/protectRoute'

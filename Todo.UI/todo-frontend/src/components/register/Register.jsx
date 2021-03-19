@@ -4,15 +4,15 @@ import PropTypes, { nominalTypeHack } from 'prop-types';
 import RegisterForm from './RegisterForm';
 import { connect } from 'react-redux';
 import { userSignupRequestAction } from '../../actions/signupActions';
-import { addFlashMessage } from '../../actions/flashMessages'
+import { addFlashMessageAction } from '../../actions/addFlashMessageAction'
 
  class Register extends React.Component {
     render() {
-        const { userSignupRequestAction, addFlashMessage } = this.props;
+        const { userSignupRequestAction, addFlashMessageAction } = this.props;
         return (
             <div className="justify-content-center row">
                 <div className="col-md-4 col-md-offset-4">
-                    <RegisterForm userSignupRequestAction={userSignupRequestAction} addFlashMessage={addFlashMessage} />
+                    <RegisterForm userSignupRequestAction={userSignupRequestAction} addFlashMessageAction={addFlashMessageAction} />
                 </div>
             </div>
         )
@@ -21,8 +21,8 @@ import { addFlashMessage } from '../../actions/flashMessages'
 
 Register.propTypes ={
     userSignupRequestAction : PropTypes.func.isRequired,
-    addFlashMessage: PropTypes.func.isRequired
+    addFlashMessageAction: PropTypes.func.isRequired
 };
 
 
-export default connect(null, { userSignupRequestAction, addFlashMessage }) (Register);
+export default connect(null, { userSignupRequestAction, addFlashMessageAction }) (Register);

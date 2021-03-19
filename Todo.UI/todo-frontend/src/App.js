@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import { Todo, NavBar, Register, Landing, FlashMessagesList, Login } from "./components";
+import { Todo, NavBar, Register, Landing, FlashMessagesList, Login, ProtecRoute } from "./components";
+import protectRoute from "./utils/protectRoute";
 
 function App() {
   return (
@@ -9,18 +10,10 @@ function App() {
         <FlashMessagesList/>
       <div>
         <Switch>
-        <Route exact path="/">
-            <Landing />
-          </Route>
-          <Route exact path="/register">
-            <Register />
-          </Route>
-          <Route exact path="/todo">
-            <Todo />
-          </Route>
-          <Route exact path="/login">
-            <Login/>
-          </Route>
+        <Route exact path="/" component={Landing}/>
+          <Route path="/register" component={Register}/>
+          <Route path="/login" component={Login}/>
+          <Route path="/todo" component={protectRoute(Todo)}/>
         </Switch>
       </div>
     </Router>

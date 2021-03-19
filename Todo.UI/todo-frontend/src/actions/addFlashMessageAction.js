@@ -1,6 +1,6 @@
 import { ADD_FLASH_MESSAGE } from "./types";
 
-export function addFlashMessage(message){
+export function addFlashMessageAction(message){
   return {
     type: ADD_FLASH_MESSAGE,
     message
