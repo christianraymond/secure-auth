@@ -1,13 +1,30 @@
-import React from 'react';
-import { Link } from 'react-router-dom'
+import React, { useState } from "react";
+
+import Form from "./Form";
+import TodoList from "./TodoList";
 
 export default function Todo() {
-    return (
-       <div className="jumbotron">
-         <div>
-            <h3>You are Logged in !</h3>
-            <button className="btn btn-warning"><Link to="/register">Logout</Link></button>
-         </div>
-       </div>
-    )
+  const [input, setInput] = useState("");
+  const [todos, setTodos] = useState([]);
+
+  return (
+    <div className="todo-container">
+      <div className="app-wrapper">
+        <div className="header">
+          <h1>Todo-List</h1>
+        </div>
+        <div>
+          <Form
+            input={input}
+            setInput={setInput}
+            todos={todos}
+            setTodos={setTodos}
+          />
+        </div>
+        <div>
+          <TodoList todos={todos} setTodos={setTodos} />
+        </div>
+      </div>
+    </div>
+  );
 }

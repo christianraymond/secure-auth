@@ -22,8 +22,8 @@ class LoginForm extends Component {
         try {
             this.props.loginActions(this.state)
                 .then(() => {
-                    history.push('/todo')
-                    // window.location.replace('/todo')
+                    // history.push('/todo')
+                    window.location.replace('/todo')
                 })
                 .catch(error => {
                     alert(error.message)
