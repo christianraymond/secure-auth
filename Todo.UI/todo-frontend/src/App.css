@@ -45,7 +45,7 @@
   font-size: 20px;
   border-radius: 10px;
   border: 0;
-  background-color: #7575a1;
+  background-color: #5d5d92;
   cursor: pointer;
 }
 
@@ -65,8 +65,7 @@
   outline: none;
   cursor: pointer;
   background-color: transparent;
-  font-size: 28px;
-  border-radius: 50%;
+  font-size: 20px;
 }
 
 .button-complete {
@@ -75,11 +74,11 @@
 }
 
 .button-edit {
-  color: #e2d029;
+  color: orange;
   margin-right: 10px;
 }
 .button-delete {
-  color: lightseagreen;
+  color: #000;
 }
 
 .complete {
