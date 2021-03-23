@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import history from '../../history'
+import { createBrowserHistory } from "history";
 
 export default class RegisterForm extends Component {
   constructor(props) {
@@ -22,23 +22,29 @@ export default class RegisterForm extends Component {
   };
 
   onSubmit = (e) => {
+    const history = createBrowserHistory();
+    const { password, confirmPsw } = this.state;
+
     e.preventDefault();
-    try {
-      this.props.userSignupRequestAction(this.state)
-        .then(() => {
-          this.props.addFlashMessageAction({
-            type: 'success',
-            text: 'You signed up successfully. Welcome!'
-          });
-          // this.context.router.push('/todo')
-          // history.push('/todo')
-          window.location.replace('/todo')
-        })
-        .catch(error => {
-          alert(error.message)
-        })
-    } catch (err) {
-     console.log(err)
+    if (password !== confirmPsw) {
+      alert("Password don't match")
+    } else {
+      try {
+        this.props.userSignupRequestAction(this.state)
+          .then(() => {
+            this.props.addFlashMessageAction({
+              type: 'success',
+              text: 'You signed up successfully. Welcome!'
+            });
+            // history.push('/todo')
+            window.location.replace('/todo')
+          })
+          .catch(error => {
+            alert(error.message)
+          })
+      } catch (err) {
+        console.log(err)
+      }
     }
   };
   render() {

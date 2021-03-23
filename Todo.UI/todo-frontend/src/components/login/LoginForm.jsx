@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { loginActions } from '../../actions/loginActions';
 import PropTypes from 'prop-types';
-import history from '../../history'
+import { createBrowserHistory } from "history";
+
 
 class LoginForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
             email: '',
             password: ''
         };
@@ -18,12 +18,14 @@ class LoginForm extends Component {
     }
 
     onSubmit = (e) => {
+        const history = createBrowserHistory();
+
         e.preventDefault();
         try {
             this.props.loginActions(this.state)
                 .then(() => {
-                    // history.push('/todo')
-                    window.location.replace('/todo')
+                    history.push("/todo");
+                    // window.location.replace('/todo')
                 })
                 .catch(error => {
                     alert(error.message)
@@ -38,7 +40,6 @@ class LoginForm extends Component {
     }
 
     render() {
-        const { username, email, password, error } = this.props;
         return (
             <form onSubmit={this.onSubmit}>
                 <h1 className="justify-content-center row">Login</h1>
