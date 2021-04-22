@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { loginActions } from '../../actions/loginActions';
 import PropTypes from 'prop-types';
 import { createBrowserHistory } from "history";
+import { withRouter } from 'react-router-dom';
 
 
 class LoginForm extends Component {
@@ -19,13 +20,11 @@ class LoginForm extends Component {
 
     onSubmit = (e) => {
         const history = createBrowserHistory();
-
         e.preventDefault();
         try {
             this.props.loginActions(this.state)
                 .then(() => {
-                    history.push("/todo");
-                    // window.location.replace('/todo')
+                    this.props.history.push("/todo"); 
                 })
                 .catch(error => {
                     alert(error.message)
@@ -75,12 +74,8 @@ class LoginForm extends Component {
     }
 }
 
-// LoginForm.prototype = {
-//     loginActions: PropTypes.func.isRequired
-// }
-
 LoginForm.contextTypes = {
     router: PropTypes.object.isRequired
 }
 
-export default connect(null, { loginActions })(LoginForm);
+export default withRouter(connect(null, { loginActions })(LoginForm));
