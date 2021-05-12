@@ -1,38 +1,51 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
+import ReactDOM from 'react-dom';
+import React from 'react';
+import { ThemeProvider } from 'styled-components';
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import styled from 'styled-components';
 
-import { Router } from "react-router-dom";
-import jwt from "json-schema";
+import theme from './utils/theme';
+import GlobalStyles from './utils/global';
+import store from './store';
 
-import { Provider } from "react-redux";
-import thunk from "redux-thunk";
-import { createStore, applyMiddleware, compose } from "redux";
-import rootReducer from "./rootReducer";
-import isAuthenticated from "./utils/isAuthenticated";
-import { setCurrentUser } from "./actions/loginActions";
-import { createBrowserHistory } from "history";
+import App from './App';
+import Loader from './components/UI/Loader/Loader';
 
-const history = createBrowserHistory();
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
-const store = createStore(
-  rootReducer,
-  compose(
-    applyMiddleware(thunk),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  )
-);
-
-if (localStorage.jwtToken) {
-  isAuthenticated(localStorage.jwtToken);
-  store.dispatch(setCurrentUser(jwt.decode(localStorage.jwtToken)));
-}
+const root = document.getElementById('root');
 
 ReactDOM.render(
-  <Provider store={store}>
-    <Router history={history}>
-      <App />
-    </Router>
-  </Provider>,
-  document.getElementById("root")
+  <ThemeProvider theme={theme}>
+    <>
+      <Wrapper>
+        <Loader />
+      </Wrapper>
+      <GlobalStyles />
+    </>
+  </ThemeProvider>,
+  root
 );
+
+store.firebaseAuthIsReady.then(() => {
+  ReactDOM.render(
+    <Provider store={store}>
+      <BrowserRouter>
+        <ThemeProvider theme={theme}>
+          <>
+            <App />
+            <GlobalStyles />
+          </>
+        </ThemeProvider>
+      </BrowserRouter>
+    </Provider>,
+    root
+  );
+});

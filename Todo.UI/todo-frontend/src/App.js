@@ -1,34 +1,41 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React, { Suspense } from "react";
+import { Route, Switch, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 
-import {
-  Todo,
-  NavBar,
-  Register,
-  Landing,
-  FlashMessagesList,
-  Login,
-  ProtecRoute,
-} from "./components";
-import "./App.css";
+import Layout from "./hoc/layout/Layout";
+import Login from "./containers/Auth/Login/Login";
+import SignUp from "./containers/Auth/SignUp/SignUp";
+import Logout from "./containers/Auth/Logout/Logout";
+const Todos = React.lazy(() => import("./containers/Todos/Todos"));
 
-import protectRoute from "./utils/protectRoute";
+const App = ({ loggedIn}) => {
+  let routes;
 
-const App = () => {
-  return (
-    <Router>
-      <NavBar />
-      <FlashMessagesList />
-      <div className="app-container">
+  if (loggedIn) {
+    routes = (
+      <Suspense fallback={<div>Loading...</div>}>
         <Switch>
-          <Route exact path="/" component={Landing} />
-          <Route path="/register" component={Register} />
-          <Route path="/login" component={Login} />
-          <Route path="/todo" component={Todo} />
-          {/* <Route path="/todo" component={protectRoute(Todo)}/> */}
+          <Route exact path="/todos" component={Todos} />
+          <Route exact path="/logout" component={Logout} />
+          <Redirect to="/todos" />
         </Switch>
-      </div>
-    </Router>
-  );
+      </Suspense>
+    );
+  } else {
+    routes = (
+      <Switch>
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/signup" component={SignUp} />
+        <Redirect to="/login" />
+      </Switch>
+    );
+  }
+
+  return <Layout>{routes}</Layout>;
 };
 
-export default App;
+const mapStateToProps = ({ firebase }) => ({
+  loggedIn: firebase.auth.uid,
+});
+
+export default connect(mapStateToProps)(App);
