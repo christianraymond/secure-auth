@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import isAuthenticated from '../../../IsAuth/isAuthenticated';
 
 import NavItem from './NavItem/NavItem';
 
@@ -17,7 +18,7 @@ const Ul = styled.ul`
 
 const NavItems = ({ mobile, clicked, loggedIn }) => {
   let links;
-  if (loggedIn.uid) {
+  if (loggedIn && isAuthenticated) {
     links = (
       <Ul mobile={mobile}>
         <NavItem mobile={mobile} clicked={clicked} link="/todos">

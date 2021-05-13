@@ -6,12 +6,14 @@ import Layout from "./hoc/layout/Layout";
 import Login from "./containers/Auth/Login/Login";
 import SignUp from "./containers/Auth/SignUp/SignUp";
 import Logout from "./containers/Auth/Logout/Logout";
+import isAuthenticated from "./IsAuth/isAuthenticated";
 const Todos = React.lazy(() => import("./containers/Todos/Todos"));
 
 const App = ({ loggedIn}) => {
   let routes;
 
-  if (loggedIn) {
+  debugger;
+  if (loggedIn && isAuthenticated) {
     routes = (
       <Suspense fallback={<div>Loading...</div>}>
         <Switch>
@@ -35,7 +37,7 @@ const App = ({ loggedIn}) => {
 };
 
 const mapStateToProps = ({ firebase }) => ({
-  loggedIn: firebase.auth.uid,
+  // loggedIn: firebase.auth.uid,
 });
 
 export default connect(mapStateToProps)(App);

@@ -1,5 +1,7 @@
 import * as actions from "./actionTypes";
 import axios from "axios";
+import isAuthenticated from '../../IsAuth/isAuthenticated';
+
 
 const ENPOINT_URL = "http://localhost:5000";
 const REG_USER_API = `${ENPOINT_URL}/api/auth/register`;
@@ -37,19 +39,15 @@ export const signIn = (data) => async (dispatch) => {
 };
 
 // Logout action creator
-export const signOut =
-  () =>
-  async (dispatch, getState, { getFirebase }) => {
-    const firebase = getFirebase();
-    try {
-      await firebase.auth().signOut();
-    } catch (err) {
-      console.log(err.message);
-    }
+export const signOut = () => {
+  return (dispatch) => {
+    localStorage.removeItem("JwtToken");
+    isAuthenticated(false);
+    dispatch({ type: actions.SET_CURRENT_USER({})})
   };
+};
 
 // Clean up messages
 export const clean = () => ({
   type: actions.CLEAN_UP,
 });
-

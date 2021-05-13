@@ -28,7 +28,7 @@ namespace Todo.API.Controllers
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [Produces("application/json")]
     public async Task<IActionResult> Register([FromBody] UserDto request)
-    {
+     {
       if (string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.Password))
       {
         return UnprocessableEntity("Email & pasword are required");
@@ -63,7 +63,7 @@ namespace Todo.API.Controllers
         user = new User() { Email = "dummy@dummy.com" };
       }
 
-      if (await _userService.CheckPasswordAsync(user, request.Password))
+      if (await _userService.CheckPasswordAsync(user, request.Password)) 
       {
         var token = await _userService.CreateAuthorizationToken(user);
         var response = new AuthenticateDto(new JwtSecurityTokenHandler().WriteToken(token), token.ValidTo);

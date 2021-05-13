@@ -11,6 +11,7 @@ import Button from '../../../components/UI/Forms/Button/Button';
 import Heading from '../../../components/UI/Headings/Heading';
 import Message from '../../../components/UI/Message/Message';
 import CustomLink from '../../../components/UI/CustomLink/CustomLink';
+import isAuthenticated from '../../../IsAuth/isAuthenticated';
 
 const MessageWrapper = styled.div`
   position: absolute;
