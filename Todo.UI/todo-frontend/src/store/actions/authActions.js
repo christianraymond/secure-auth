@@ -36,12 +36,3 @@ export const signIn = (user) => async (dispatch) => {
     dispatch({ type: actions.AUTH_END });
   }
 };
-
-// Logout action creator
-export const signOut = () => {
-  return (dispatch) => {
-    localStorage.removeItem("token");
-    isAuthenticated(false);
-    dispatch({ type: actions.AUTH_END({}) });
-  };
-};

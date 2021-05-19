@@ -8,9 +8,7 @@ import SignUp from "./containers/Auth/SignUp/SignUp";
 const Todos = React.lazy(() => import("./containers/Todos/Todos"));
 
 const App = props => {
-
   const { isLoggedIn } = props.auth;
-
   let privateLink = (
     <Suspense fallback={<div>Loading...</div>}>
       <Switch>
