@@ -1,7 +1,6 @@
 import * as actions from "./actionTypes";
 import axios from "axios";
-import isAuthenticated from '../../IsAuth/isAuthenticated';
-
+import { isAuthenticated } from "../../IsAuth/isAuthenticated";
 
 const ENPOINT_URL = "http://localhost:5000";
 const REG_USER_API = `${ENPOINT_URL}/api/auth/register`;
@@ -10,9 +9,10 @@ const REG_USER_API = `${ENPOINT_URL}/api/auth/register`;
 export const signUp = (userData) => async (dispatch) => {
   dispatch({ type: actions.AUTH_START });
   try {
+    // debugger;
     const res = await axios.post(REG_USER_API, userData);
     console.log(res);
-    dispatch({ type: actions.AUTH_SUCCESS });
+    dispatch({ type: actions.REGISTER_USER_SUCCESS });
   } catch (err) {
     dispatch({ type: actions.AUTH_FAIL, payload: err.message });
   } finally {
@@ -24,12 +24,11 @@ export const signUp = (userData) => async (dispatch) => {
 const LOGIN_ENPOINT_URL = "http://localhost:5000";
 const LOGIN_USER_API = `${LOGIN_ENPOINT_URL}/api/auth`;
 // Login action creator
-export const signIn = (data) => async (dispatch) => {
+export const signIn = (user) => async (dispatch) => {
   dispatch({ type: actions.AUTH_START });
   try {
-    const res = await axios.post(LOGIN_USER_API, data);
-    console.log(res);
-    dispatch({ type: actions.AUTH_SUCCESS });
+    const res = await axios.post(LOGIN_USER_API, user);
+    dispatch(isAuthenticated(res));
   } catch (err) {
     dispatch({ type: actions.AUTH_FAIL, payload: err.message });
   } finally {
@@ -41,13 +40,8 @@ export const signIn = (data) => async (dispatch) => {
 // Logout action creator
 export const signOut = () => {
   return (dispatch) => {
-    localStorage.removeItem("JwtToken");
+    localStorage.removeItem("token");
     isAuthenticated(false);
-    dispatch({ type: actions.SET_CURRENT_USER({})})
+    dispatch({ type: actions.AUTH_END({}) });
   };
 };
-
-// Clean up messages
-export const clean = () => ({
-  type: actions.CLEAN_UP,
-});

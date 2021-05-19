@@ -5,39 +5,36 @@ import { connect } from "react-redux";
 import Layout from "./hoc/layout/Layout";
 import Login from "./containers/Auth/Login/Login";
 import SignUp from "./containers/Auth/SignUp/SignUp";
-import Logout from "./containers/Auth/Logout/Logout";
-import isAuthenticated from "./IsAuth/isAuthenticated";
 const Todos = React.lazy(() => import("./containers/Todos/Todos"));
 
-const App = ({ loggedIn}) => {
-  let routes;
+const App = props => {
 
-  debugger;
-  if (loggedIn && isAuthenticated) {
-    routes = (
-      <Suspense fallback={<div>Loading...</div>}>
-        <Switch>
-          <Route exact path="/todos" component={Todos} />
-          <Route exact path="/logout" component={Logout} />
-          <Redirect to="/todos" />
-        </Switch>
-      </Suspense>
-    );
-  } else {
-    routes = (
+  const { isLoggedIn } = props.auth;
+
+  let privateLink = (
+    <Suspense fallback={<div>Loading...</div>}>
       <Switch>
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/signup" component={SignUp} />
-        <Redirect to="/login" />
+        <Route exact path="/todos" component={Todos} />
+        <Redirect to="/todos" />
       </Switch>
-    );
-  }
+    </Suspense>
+  );
 
-  return <Layout>{routes}</Layout>;
+  let guestLink = (
+    <Switch>
+      <Route exact path="/login" component={Login} />
+      <Route exact path="/signup" component={SignUp} />
+      <Redirect to="/login" />
+    </Switch>
+  );
+ return isLoggedIn ? <Layout>{privateLink}</Layout> : <Layout>{guestLink}</Layout>;
 };
 
-const mapStateToProps = ({ firebase }) => ({
-  // loggedIn: firebase.auth.uid,
-});
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+    isLoggedIn: state.auth
+  }
+}
 
 export default connect(mapStateToProps)(App);

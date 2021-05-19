@@ -1,17 +1,16 @@
-import React, { useEffect } from 'react';
-import { Formik, Field } from 'formik';
-import * as Yup from 'yup';
-import * as actions from '../../../store/actions';
-import { connect } from 'react-redux';
-import styled from 'styled-components';
+import React, { useEffect } from "react";
+import { Formik, Field } from "formik";
+import * as Yup from "yup";
+import * as actions from "../../../store/actions";
+import { connect } from "react-redux";
+import styled from "styled-components";
 
-import { FormWrapper, StyledForm } from '../../../hoc/layout/elements';
-import Input from '../../../components/UI/Forms/Input/Input';
-import Button from '../../../components/UI/Forms/Button/Button';
-import Heading from '../../../components/UI/Headings/Heading';
-import Message from '../../../components/UI/Message/Message';
-import CustomLink from '../../../components/UI/CustomLink/CustomLink';
-import isAuthenticated from '../../../IsAuth/isAuthenticated';
+import { FormWrapper, StyledForm } from "../../../hoc/layout/elements";
+import Input from "../../../components/UI/Forms/Input/Input";
+import Button from "../../../components/UI/Forms/Button/Button";
+import Heading from "../../../components/UI/Headings/Heading";
+import Message from "../../../components/UI/Message/Message";
+import CustomLink from "../../../components/UI/CustomLink/CustomLink";
 
 const MessageWrapper = styled.div`
   position: absolute;
@@ -20,25 +19,19 @@ const MessageWrapper = styled.div`
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string()
-    .email('Invalid email.')
-    .required('The email is required.'),
+    .email("Invalid email.")
+    .required("The email is required."),
   password: Yup.string()
-    .required('The passoword is required.')
-    .min(8, 'Too short.'),
+    .required("The passoword is required.")
+    .min(8, "Too short."),
 });
 
-const Login = ({ login, loading, error, cleanUp }) => {
-  useEffect(() => {
-    return () => {
-      cleanUp();
-    };
-  }, [cleanUp]);
-
+const Login = ({ login, loading, error }) => {
   return (
     <Formik
       initialValues={{
-        email: '',
-        password: '',
+        email: "",
+        password: "",
       }}
       validationSchema={LoginSchema}
       onSubmit={async (values, { setSubmitting }) => {
@@ -69,13 +62,13 @@ const Login = ({ login, loading, error, cleanUp }) => {
             />
             <Button
               disabled={!isValid || isSubmitting}
-              loading={loading ? 'Logging in...' : null}
+              loading={loading ? "Logging in..." : null}
               type="submit"
             >
               Login
             </Button>
-            <CustomLink link="/recover" color="white">
-              Forgot your password?
+            <CustomLink link="/signup" color="white">
+              Don't have an account?
             </CustomLink>
             <MessageWrapper>
               <Message error show={error}>
@@ -96,10 +89,6 @@ const mapStateToProps = ({ auth }) => ({
 
 const mapDispatchToProps = {
   login: actions.signIn,
-  cleanUp: actions.clean,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

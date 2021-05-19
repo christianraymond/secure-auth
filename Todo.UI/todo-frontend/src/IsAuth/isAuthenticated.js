@@ -1,9 +1,26 @@
-import axios from "axios";
+//use middleware to handle the network requests to send the login details to the server.
 
-export default function isAuthenticated(token) {
-  if (token) {
-    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-  } else {
-    delete axios.defaults.headers.common["Authorization"];
-  }
-}
+import {
+  IS_LOADING,
+  LOGIN_USER_SUCCESS,
+  LOGOUT,
+} from "../store/actions/actionTypes";
+
+export const isAuthenticated = (user) => {
+  return {
+    type: LOGIN_USER_SUCCESS,
+    payload: user,
+  };
+};
+
+export const isLoading = () => {
+  return {
+    type: IS_LOADING,
+  };
+};
+
+export const logout = () => {
+  return {
+    type: LOGOUT,
+  };
+};

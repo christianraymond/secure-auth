@@ -1,11 +1,13 @@
 export const AUTH_START = 'AUTH_START';
-export const REGISTER_USER = 'REGISTER_USER';
-export const AUTH_SUCCESS = 'AUTH_SUCCESS'
+export const IS_LOADING = 'IS_LOADING';
+
+export const REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS'
+export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
+
 export const AUTH_FAIL = 'AUTH_FAIL';
 export const AUTH_END = 'AUTH_END';
-export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 
-export const CLEAN_UP = 'CLEAN_UP';
+export const LOGOUT = 'LOGOUT';
 
 export const ADD_TODO_START = 'ADD_TODO_START';
 export const ADD_TODO_SUCCESS = 'ADD_TODO_SUCCESS';

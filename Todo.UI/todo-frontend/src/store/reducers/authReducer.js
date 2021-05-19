@@ -1,80 +1,54 @@
-import { isEmpty } from "react-redux-firebase";
-import * as actions from "../actions/actionTypes";
+import {
+  AUTH_START,
+  REGISTER_USER_SUCCESS,
+  LOGIN_USER_SUCCESS,
+  IS_LOADING,
+  AUTH_FAIL,
+  AUTH_END,
+  LOGOUT
+} from "../actions/actionTypes";
 
 const initialState = {
+  token: '',
+  user: {},
+  isLoggedIn: !!localStorage.getItem("user"),
   error: null,
   loading: false,
-  username: "",
-  token: "",
-  isAuthenticated: false,
 };
 
-// HELPER FUNCTIONS
-const authStart = (state) => {
-  return {
-    ...state,
-    loading: true,
-  };
-};
-
-const authSuccess = (state, username) => {
-  return {
-    ...state,
-    error: false,
-    isAuthenticated: true,
-    token: username.token,
-  };
-};
-const authEnd = (state) => {
-  return {
-    ...state,
-    loading: false,
-  };
-};
-
-const authFail = (state, payload) => {
-  return {
-    ...state,
-    error: payload,
-  };
-};
-
-const cleanUp = (state) => {
-  return {
-    ...state,
-    error: null,
-    loading: false,
-  };
-};
-
-const setCurrentUser = (state, payload) => {
-  return {
-    ...state,
-    isAuthenticated: !isEmpty(payload.username),
-    username: payload,
-  };
-};
-
-export default (state = initialState, { type, payload }) => {
-  switch (type) {
-    case actions.CLEAN_UP:
-      return cleanUp(state);
-
-    case actions.AUTH_START:
-      return authStart(state);
-
-    case actions.AUTH_SUCCESS:
-      return authSuccess(state);
-
-    case actions.AUTH_END:
-      return authEnd(state);
-
-    case actions.AUTH_FAIL:
-      return authFail(state, payload);
-
-    case actions.SET_CURRENT_USER:
-     return setCurrentUser(state, payload)
+export default (state = initialState, action) => {
+  switch (action.type) {
+    case AUTH_START:
+      return { ...state, loading: true };
+    case REGISTER_USER_SUCCESS:
+      return {
+        ...state,
+        error: false,
+        loading: false,
+        user: action.payload,
+      };
+    case LOGIN_USER_SUCCESS:
+      localStorage.setItem('token', (action.payload.data.token))
+      return {
+        ...state,
+        token: action.payload.data.token,
+        user: action.payload.config.data,
+        error: false,
+        loading: false,
+        isLoggedIn: true,
+      };
+    case IS_LOADING:
+      return { ...state, loading: true}  
+    case AUTH_FAIL:
+      return { ...state, error: action.payload };
+    case AUTH_END:
+      return { ...state, loading: false };
+      case LOGOUT:
+        localStorage.removeItem("user");
+        return { ...state, isLoggedIn: false, user: {} };
+  
     default:
       return state;
   }
 };
+

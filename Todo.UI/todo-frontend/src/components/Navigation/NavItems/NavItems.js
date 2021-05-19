@@ -1,47 +1,53 @@
-import React from 'react';
-import styled from 'styled-components';
-import isAuthenticated from '../../../IsAuth/isAuthenticated';
-
-import NavItem from './NavItem/NavItem';
+import React from "react";
+import { connect } from "react-redux";
+import styled from "styled-components";
+import NavItem from "./NavItem/NavItem";
 
 const Nav = styled.nav`
   display: flex;
-  margin-top: ${props => (props.mobile ? '-6rem' : null)};
+  margin-top: ${(props) => (props.mobile ? "-6rem" : null)};
 `;
 
 const Ul = styled.ul`
   display: flex;
-  flex-direction: ${props => (props.mobile ? 'column' : 'row')};
+  flex-direction: ${(props) => (props.mobile ? "column" : "row")};
   align-items: center;
   height: 100%;
 `;
 
-const NavItems = ({ mobile, clicked, loggedIn }) => {
-  let links;
-  if (loggedIn && isAuthenticated) {
-    links = (
-      <Ul mobile={mobile}>
-        <NavItem mobile={mobile} clicked={clicked} link="/todos">
-          Todos
-        </NavItem>
-        <NavItem mobile={mobile} clicked={clicked} link="/">
-          Logout
-        </NavItem>
-      </Ul>
-    );
-  } else {
-    links = (
-      <Ul mobile={mobile}>
-        <NavItem mobile={mobile} clicked={clicked} link="/login">
-          Login
-        </NavItem>
-        <NavItem mobile={mobile} clicked={clicked} link="/signup">
-          Signup
-        </NavItem>
-      </Ul>
-    );
-  }
-  return <Nav mobile={mobile}>{links}</Nav>;
+const NavItems = props => {
+ 
+  const { isLoggedIn } = props.auth;
+  const { logout } = props.auth;
+
+  let privateLink = (
+    <Ul mobile={props.mobile}>
+      <NavItem mobile={props.mobile} clicked={props.clicked} link="/todos">
+        Todos
+      </NavItem>
+      <NavItem mobile={props.mobile} clicked={props.logout} link="/">Logout</NavItem>
+    </Ul>
+  );
+  let guestLink = (
+    <Ul mobile={props.mobile}>
+      <NavItem mobile={props.mobile} clicked={props.clicked} link="/login">
+        Login
+      </NavItem>
+      <NavItem mobile={props.mobile} clicked={props.clicked} link="/signup">
+        Signup
+      </NavItem>
+    </Ul>
+  );
+  return isLoggedIn ? <Nav mobile={props.mobile}>{privateLink}</Nav> : <Nav mobile={props.mobile}>{guestLink}</Nav>
 };
 
-export default NavItems;
+
+
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+    isLoggedIn: state.auth
+  }
+}
+
+export default connect(mapStateToProps)(NavItems);

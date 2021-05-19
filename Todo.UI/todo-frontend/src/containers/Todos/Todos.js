@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { firestoreConnect } from 'react-redux-firebase';
+
+import axios from 'axios';
 
 import Heading from '../../components/UI/Headings/Heading';
 import { Container } from '../../hoc/layout/elements';
@@ -94,19 +95,4 @@ const Todos = ({ todos, requested, userId }) => {
   );
 };
 
-const mapStateToProps = ({ firebase, firestore }) => ({
-  userId: firebase.auth.uid,
-  todos: firestore.data.todos,
-  requesting: firestore.status.requesting,
-  requested: firestore.status.requested,
-});
-
-const mapDispatchToProps = {};
-
-export default compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  ),
-  firestoreConnect(props => [`todos/${props.userId}`])
-)(Todos);
+export default connect()(Todos)

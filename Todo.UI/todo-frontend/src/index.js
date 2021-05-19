@@ -8,9 +8,6 @@ import styled from "styled-components";
 import theme from "./utils/theme";
 import GlobalStyles from "./utils/global";
 import store from "./store";
-import  isAuthenticated from './IsAuth/isAuthenticated';
-import jwt from "json-schema";
-import setCurrentUser  from './store/reducers/authReducer';
 
 import App from "./App";
 import Loader from "./components/UI/Loader/Loader";
@@ -23,12 +20,8 @@ const Wrapper = styled.div`
   justify-content: center;
 `;
 
-const root = document.getElementById("root");
 
-if (localStorage.jwtToken) {
-  isAuthenticated(localStorage.jwtToken);
-  store.dispatch(setCurrentUser(jwt.decode(localStorage.jwtToken)));
-}
+const root = document.getElementById("root");
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>
