@@ -4,6 +4,7 @@ import {
   IS_LOADING,
   LOGIN_USER_SUCCESS,
   LOGOUT,
+  USER_MEMBER,
 } from "../store/actions/actionTypes";
 
 export const isAuthenticated = (user) => {
@@ -13,6 +14,12 @@ export const isAuthenticated = (user) => {
   };
 };
 
+export const userMemberAuth = (payload) => {
+  return {
+    type: USER_MEMBER,
+    payload
+  }
+}
 export const isLoading = () => {
   return {
     type: IS_LOADING,

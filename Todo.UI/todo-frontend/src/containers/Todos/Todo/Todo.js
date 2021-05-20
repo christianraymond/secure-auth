@@ -40,9 +40,16 @@ const deleteStyles = {
   cursor: 'pointer',
 };
 
+const isCompleteStyles = {
+  color: 'var(--color-errorRed)',
+  margin: '0 .5rem',
+  cursor: 'pointer',
+};
+
 const Todo = ({ todo }) => {
   const [isDeleting, setisDeleting] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [isComplete, setIsComplete] = useState(false);
 
   return (
     <Wrapper>
@@ -57,6 +64,11 @@ const Todo = ({ todo }) => {
           className="fas fa-trash-alt"
           style={deleteStyles}
           onClick={() => setisDeleting(true)}
+        />
+         <i
+          className="fas fa-check-square"
+          style={isCompleteStyles}
+          onClick={() => setIsComplete(true)}
         />
         <DeleteTodo
           todo={todo}

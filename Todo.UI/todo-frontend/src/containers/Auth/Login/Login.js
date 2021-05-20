@@ -62,7 +62,7 @@ const Login = ({ login, loading, error }) => {
             />
             <Button
               disabled={!isValid || isSubmitting}
-              loading={loading ? "Logging in..." : null}
+              loading={loading ? "Logging you in..." : null}
               type="submit"
             >
               Login

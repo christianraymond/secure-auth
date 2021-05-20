@@ -4,6 +4,7 @@ import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
 import styled from 'styled-components';
 
+
 import Button from '../../../components/UI/Forms/Button/Button';
 import Heading from '../../../components/UI/Headings/Heading';
 import Modal from '../../../components/UI/Modal/Modal';
@@ -31,40 +32,36 @@ const TodoSchema = Yup.object().shape({
   todo: Yup.string()
     .required('The todo is required.')
     .min(4, 'Too short.'),
+  description: Yup.string()
+    .required('The description is required.')
+    .min(4, 'Too short.'),
 });
 
-const InputTodo = ({
-  editTodo,
-  close,
-  opened,
-  addTodo,
-  loading,
-  error,
-  editTodoAction,
-}) => {
-  const loadingText = editTodo ? 'Editing...' : 'Adding...';
+const InputTodo = ({ editTodo, close, opened, createTodo, loading, error, editTodoAction, token}) => {
+
+  const loadingText = editTodo ? 'Editing...' : 'Creatinging...';
 
   return (
     <>
       <Modal opened={opened} close={close}>
         <Heading noMargin size="h1" color="white">
-          {editTodo ? 'Edit your todo' : 'Add your new todo'}
+          {editTodo ? 'Edit your todo' : 'Create your new todo'}
         </Heading>
         <Heading bold size="h4" color="white">
           {editTodo
             ? 'Edit your todo and tap edit'
-            : 'Type your todo and press add'}
+            : 'Type your todo and press create'}
         </Heading>
         <Formik
           initialValues={{
             todo: editTodo ? editTodo.todo : '',
+            description: '',
+            isComplete: [],
           }}
           validationSchema={TodoSchema}
           onSubmit={async (values, { setSubmitting, resetForm }) => {
-            // send our todo
-            const res = editTodo
-              ? await editTodoAction(editTodo.id, values)
-              : await addTodo(values);
+            debugger;
+            const res = editTodo ? await editTodoAction(editTodo.id, values) : await createTodo(values, token);
             if (res) {
               close();
             }
@@ -80,6 +77,20 @@ const InputTodo = ({
                 placeholder="Write your todo..."
                 component={Input}
               />
+             <Field
+                type="text"
+                name="description"
+                placeholder="Description..."
+                component={Input}
+              />
+              <label>
+              isComplete &nbsp;&nbsp;
+              <Field
+                type="checkbox"
+                name="isComplete"
+                value="isComplete"
+              />
+              </label>
               <ButtonsWrapper>
                 <Button
                   contain
@@ -88,7 +99,7 @@ const InputTodo = ({
                   disabled={!isValid || isSubmitting}
                   loading={loading ? loadingText : null}
                 >
-                  {editTodo ? 'Edit todo' : 'Add todo'}
+                  {editTodo ? 'Edit todo' : 'Create todo'}
                 </Button>
                 <Button
                   type="button"
@@ -115,13 +126,16 @@ const InputTodo = ({
   );
 };
 
-const mapStateToProps = ({ todos }) => ({
-  loading: todos.loading,
-  error: todos.error,
-});
+const mapStateToProps = (state) => { 
+ return {
+  loading: state.loading,
+  error: state.error,
+  token: state.auth.token,
+ }
+}
 
 const mapDispatchToProps = {
-  addTodo: actions.addTodo,
+  createTodo: actions.createTodo,
   editTodoAction: actions.editTodo,
 };
 

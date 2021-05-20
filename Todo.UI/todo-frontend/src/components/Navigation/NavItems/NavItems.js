@@ -25,7 +25,7 @@ const NavItems = (props) => {
       <NavItem mobile={props.mobile} clicked={props.clicked} link="/todos">
         Todos
       </NavItem>
-      <button mobile={props.mobile} onClick={props.logout}>Logout </button>
+      <button onClick={props.logout}>Logout </button>
     </Ul>
   );
   let guestLink = (

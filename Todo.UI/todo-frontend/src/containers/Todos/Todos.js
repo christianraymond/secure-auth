@@ -36,16 +36,18 @@ const Content = styled.div`
   margin-top: 2rem;
 `;
 
-const Todos = ({ todos, requested, userId }) => {
-  const [isAdding, setIsAdding] = useState(false);
+const Todos = props => {
+  const items = props.todos;
+
+  const [isCreating, setIsCreating] = useState(false);
   let content;
-  if (!todos) {
+  if (!items) {
     content = (
       <Content>
         <Loader isWhite />
       </Content>
     );
-  } else if (!todos[userId] || !todos[userId].todos) {
+  } else if (!items[props.token] || !items[props.token].items) {
     content = (
       <Content>
         <Heading color="white" size="h2">
@@ -53,7 +55,7 @@ const Todos = ({ todos, requested, userId }) => {
         </Heading>
       </Content>
     );
-  } else if (todos[userId].todos.length === 0) {
+  } else if (items[props.token].items.length === 0) {
     content = (
       <Content>
         <Heading color="white" size="h2">
@@ -64,11 +66,11 @@ const Todos = ({ todos, requested, userId }) => {
   } else {
     content = (
       <Content>
-        {todos[userId].todos
+        {items[props.token].item
           .slice(0)
           .reverse()
-          .map(todo => (
-            <Todo key={todo.id} todo={todo} />
+          .map(item => (
+            <Todo key={item.id} item={item} />
           ))}
       </Content>
     );
@@ -84,15 +86,25 @@ const Todos = ({ todos, requested, userId }) => {
           <Heading bold size="h4" color="white">
             All you have to do for now...
           </Heading>
-          <Button color="main" contain onClick={() => setIsAdding(true)}>
-            Add Todo
+          <Button color="main" contain onClick={() => setIsCreating(true)}>
+            Create Todo
           </Button>
-          <InputTodo opened={isAdding} close={() => setIsAdding(false)} />
+          <InputTodo opened={isCreating} close={() => setIsCreating(false)} />
           {content}
+          {props.item}
         </InnerWrapper>
       </Container>
     </Wrapper>
   );
 };
 
-export default connect()(Todos)
+const mapStateToProps = ( state ) => {
+  return {
+    todos: state.todos,
+    token: state.auth.token,
+    error: state.todos.error,
+    todos: state.todos.items
+  }
+}
+
+export default connect(mapStateToProps, null)(Todos)

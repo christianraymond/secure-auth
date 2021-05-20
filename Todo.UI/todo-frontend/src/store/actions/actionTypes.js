@@ -8,10 +8,14 @@ export const AUTH_FAIL = 'AUTH_FAIL';
 export const AUTH_END = 'AUTH_END';
 
 export const LOGOUT = 'LOGOUT';
+export const USER_MEMBER = 'USER_MEMBER';
+export const GETTING_TODOS = 'GETTING_TODOS'
 
 export const ADD_TODO_START = 'ADD_TODO_START';
 export const ADD_TODO_SUCCESS = 'ADD_TODO_SUCCESS';
-export const ADD_TODO_FAIL = 'ADD_TODO_FAIL';
+export const TODO_GET = 'TODO_GET';
+export const TODO_FAIL = 'ADD_TODO_FAIL';
+export const TODO_LIST = 'TODO_LIST';
 
 export const DELETE_TODO_START = 'DELETE_TODO_START';
 export const DELETE_TODO_SUCCESS = 'DELETE_TODO_SUCCESS';

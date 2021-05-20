@@ -1,3 +1,3 @@
 export { signUp, signIn} from './authActions';
 
-export { addTodo, deleteTodo, editTodo } from './todoActions.js';
+export { createTodo, deleteTodo, editTodo } from './todoActions.js';

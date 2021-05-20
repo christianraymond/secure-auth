@@ -5,12 +5,14 @@ import {
   IS_LOADING,
   AUTH_FAIL,
   AUTH_END,
-  LOGOUT
+  LOGOUT,
+  USER_MEMBER,
 } from "../actions/actionTypes";
 
 const initialState = {
-  token: '',
+  token: "",
   user: {},
+  user_member: {},
   isLoggedIn: !!localStorage.getItem("user"),
   error: null,
   loading: false,
@@ -28,7 +30,7 @@ export default (state = initialState, action) => {
         user: action.payload,
       };
     case LOGIN_USER_SUCCESS:
-      localStorage.setItem('token', (action.payload.data.token))
+      localStorage.setItem("token", action.payload.data.token);
       return {
         ...state,
         token: action.payload.data.token,
@@ -37,18 +39,23 @@ export default (state = initialState, action) => {
         loading: false,
         isLoggedIn: true,
       };
+    case USER_MEMBER:
+      return {
+        ...state,
+        error: false,
+        user_member: { ...action.payload },
+      };
     case IS_LOADING:
-      return { ...state, loading: true}  
+      return { ...state, loading: true };
     case AUTH_FAIL:
       return { ...state, error: action.payload };
     case AUTH_END:
       return { ...state, loading: false };
-      case LOGOUT:
-        localStorage.removeItem("user");
-        return { ...state, isLoggedIn: false, user: {} };
-  
+    case LOGOUT:
+      localStorage.removeItem("user");
+      return { ...state, isLoggedIn: false, user: {} };
+
     default:
       return state;
   }
 };
-
