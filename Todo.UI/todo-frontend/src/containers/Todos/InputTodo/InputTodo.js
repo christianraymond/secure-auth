@@ -29,7 +29,7 @@ const MessageWrapper = styled.div`
 `;
 
 const TodoSchema = Yup.object().shape({
-  todo: Yup.string()
+  title: Yup.string()
     .required('The todo is required.')
     .min(4, 'Too short.'),
   description: Yup.string()
@@ -54,14 +54,14 @@ const InputTodo = ({ editTodo, close, opened, createTodo, loading, error, editTo
         </Heading>
         <Formik
           initialValues={{
-            todo: editTodo ? editTodo.todo : '',
+            // title: editTodo ? editTodo.title : '',
+            title: '',
             description: '',
             isComplete: [],
           }}
           validationSchema={TodoSchema}
-          onSubmit={async (values, { setSubmitting, resetForm }) => {
-            debugger;
-            const res = editTodo ? await editTodoAction(editTodo.id, values) : await createTodo(values, token);
+          onSubmit={async (todoValues, { setSubmitting, resetForm }) => {
+            const res = editTodo ? await editTodoAction(editTodo.id, todoValues) : await createTodo(todoValues, token);
             if (res) {
               close();
             }
@@ -73,7 +73,7 @@ const InputTodo = ({ editTodo, close, opened, createTodo, loading, error, editTo
             <StyledForm>
               <Field
                 type="text"
-                name="todo"
+                name="title"
                 placeholder="Write your todo..."
                 component={Input}
               />
@@ -131,6 +131,7 @@ const mapStateToProps = (state) => {
   loading: state.loading,
   error: state.error,
   token: state.auth.token,
+  initialValues: state.todos.selectedTodo
  }
 }
 
