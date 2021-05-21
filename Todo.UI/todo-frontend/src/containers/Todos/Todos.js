@@ -3,14 +3,13 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import axios from 'axios';
-
 import Heading from '../../components/UI/Headings/Heading';
 import { Container } from '../../hoc/layout/elements';
 import InputTodo from './InputTodo/InputTodo';
 import Button from '../../components/UI/Forms/Button/Button';
 import Loader from '../../components/UI/Loader/Loader';
 import Todo from './Todo/Todo';
+import { getTodos } from '../../store/actions/todoActions';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -37,17 +36,16 @@ const Content = styled.div`
 `;
 
 const Todos = props => {
-  const items = props.todos;
-
-  const [isCreating, setIsCreating] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
+  const { todos, token } = props;
   let content;
-  if (!items) {
+  if (!todos) {
     content = (
       <Content>
         <Loader isWhite />
       </Content>
     );
-  } else if (!items[props.token] || !items[props.token].items) {
+  } else if (!todos[token] || !todos[token].todos) {
     content = (
       <Content>
         <Heading color="white" size="h2">
@@ -55,22 +53,22 @@ const Todos = props => {
         </Heading>
       </Content>
     );
-  } else if (items[props.token].items.length === 0) {
+  } else if (todos[token].todos.length === 0) {
     content = (
       <Content>
         <Heading color="white" size="h2">
-          You have no todos!
+          You have no todos!!
         </Heading>
       </Content>
     );
   } else {
     content = (
       <Content>
-        {items[props.token].item
+        {todos[token].todos
           .slice(0)
           .reverse()
-          .map(item => (
-            <Todo key={item.id} item={item} />
+          .map(todo => (
+            <Todo key={todo.id} todo={todo} />
           ))}
       </Content>
     );
@@ -86,25 +84,23 @@ const Todos = props => {
           <Heading bold size="h4" color="white">
             All you have to do for now...
           </Heading>
-          <Button color="main" contain onClick={() => setIsCreating(true)}>
-            Create Todo
+          <Button color="main" contain onClick={() => setIsAdding(true)}>
+            Add Todo
           </Button>
-          <InputTodo opened={isCreating} close={() => setIsCreating(false)} />
+          <InputTodo opened={isAdding} close={() => setIsAdding(false)} />
           {content}
-          {props.item}
         </InnerWrapper>
       </Container>
     </Wrapper>
   );
 };
 
-const mapStateToProps = ( state ) => {
-  return {
-    todos: state.todos,
-    token: state.auth.token,
-    error: state.todos.error,
-    todos: state.todos.items
-  }
-}
+const mapStateToProps = (state) => ({
+  todos: state.todos.todos,
+  token: state.auth.token,
+  error: state.error
+});
 
-export default connect(mapStateToProps, null)(Todos)
+const mapDispatchToProps = {};
+
+export default(connect(mapStateToProps, mapDispatchToProps)(Todos))

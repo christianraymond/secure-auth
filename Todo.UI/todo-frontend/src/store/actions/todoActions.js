@@ -1,4 +1,5 @@
 import axios from "axios";
+import { todoAdded } from "../../IsAuth/isAuthenticated";
 import * as actions from "./actionTypes";
 
 const TODO_API = "http://localhost:5000";
@@ -14,7 +15,7 @@ const userTokenId = (token) => {
 
 // Add a todo
 export const createTodo =
-  (formProps, token, onComplete) => async (dispatch) => {
+  (formProps, token) => async (dispatch) => {
     dispatch({ type: actions.ADD_TODO_START });
     try {
       const res = await axios.post(
@@ -22,19 +23,29 @@ export const createTodo =
         { ...formProps },
         userTokenId(token)
       );
-      console.log(res);
-      dispatch({ type: actions.ADD_TODO_SUCCESS, payload: res.data });
-      onComplete();
+      console.log("I'm an => ", res);
+      dispatch(todoAdded(res.config.data))
     } catch (err) {
       dispatch({ type: actions.TODO_FAIL, payload: err.message });
     }
   };
 
 //List Added Todos
-export const getTodo = (token) => async (dispatch) => {
+export const getTodos = (token) => async (dispatch) => {
   dispatch({ type: actions.GETTING_TODOS });
   try {
     const res = await axios.get(API, userTokenId(token));
+    dispatch({ type: actions.TODO_LIST, payload: res.data });
+  } catch (error) {
+    dispatch({ type: actions.TODO_FAIL });
+  }
+};
+
+//Get Added todo by Id
+export const getTodoById = (token, id) => async (dispatch) => {
+  dispatch({ type: actions.GETTING_TODOS });
+  try {
+    const res = await axios.get(`${API}/${id}`, userTokenId(token));
     dispatch({ type: actions.TODO_LIST, payload: res.data });
   } catch (error) {
     dispatch({ type: actions.TODO_FAIL });

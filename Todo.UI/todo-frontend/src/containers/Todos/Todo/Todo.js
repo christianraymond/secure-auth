@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import DeleteTodo from './DeleteTodo/DeleteTodo';
 import InputTodo from '../InputTodo/InputTodo';
+import { connect } from 'react-redux';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -53,7 +54,7 @@ const Todo = ({ todo }) => {
 
   return (
     <Wrapper>
-      {todo.todo}
+      {todo.props.todo}
       <Controls>
         <i
           className="fas fa-edit"
@@ -85,4 +86,10 @@ const Todo = ({ todo }) => {
   );
 };
 
-export default Todo;
+const mapStateToProps = ( state ) => {
+  return {
+    todo: state.todos,
+  }
+}
+
+export default connect(mapStateToProps)(Todo)
