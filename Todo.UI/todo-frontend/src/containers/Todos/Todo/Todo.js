@@ -47,14 +47,14 @@ const isCompleteStyles = {
   cursor: 'pointer',
 };
 
-const Todo = ({ todo }) => {
+const Todo = (props) => {
   const [isDeleting, setisDeleting] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
-
+  const { todo } = props;
   return (
     <Wrapper>
-      {todo.props.todo}
+      {todo.title}
       <Controls>
         <i
           className="fas fa-edit"
@@ -86,10 +86,4 @@ const Todo = ({ todo }) => {
   );
 };
 
-const mapStateToProps = ( state ) => {
-  return {
-    todo: state.todos,
-  }
-}
-
-export default connect(mapStateToProps)(Todo)
+export default Todo;

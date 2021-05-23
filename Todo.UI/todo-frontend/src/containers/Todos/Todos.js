@@ -37,12 +37,11 @@ const Content = styled.div`
 
 const Todos = (props) => {
   const [isAdding, setIsAdding] = useState(false);
-  // debugger
+  debugger;
   const { todos, token } = props;
 
   useEffect(() => {
     getTodos(props.token);
-    console.log('mounted !')
   }, [todos]);
 
   let content;
@@ -52,7 +51,7 @@ const Todos = (props) => {
         <Loader isWhite />
       </Content>
     );
-  } else if (!todos[token] || !todos[token].todos) {
+  } else if (!todos) {
     content = (
       <Content>
         <Heading color="white" size="h2">
@@ -60,7 +59,7 @@ const Todos = (props) => {
         </Heading>
       </Content>
     );
-  } else if (todos[token].todos.length === 0) {
+  } else if (todos === 0) {
     content = (
       <Content>
         <Heading color="white" size="h2">
@@ -71,12 +70,9 @@ const Todos = (props) => {
   } else {
     content = (
       <Content>
-        {todos[token].todos
-          .slice(0)
-          .reverse()
-          .map((todo) => (
-            <Todo key={todo.id} todo={todo} />
-          ))}
+        {todos.map((todo) => (
+          <Todo key={todo.id} todo={todo} />
+        ))}
       </Content>
     );
   }
@@ -94,7 +90,7 @@ const Todos = (props) => {
             Add Todo
           </Button>
           <InputTodo opened={isAdding} close={() => setIsAdding(false)} />
-          {todos}
+          {content}
         </InnerWrapper>
       </Container>
     </Wrapper>

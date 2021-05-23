@@ -35,6 +35,8 @@ const TodoSchema = Yup.object().shape({
   description: Yup.string()
     .required('The description is required.')
     .min(4, 'Too short.'),
+  isComplete:Yup.string()
+    .required('This field is required')
 });
 
 const InputTodo = ({ editTodo, close, opened, createTodo, loading, error, editTodoAction, token}) => {

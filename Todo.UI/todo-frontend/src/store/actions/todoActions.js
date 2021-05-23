@@ -24,7 +24,7 @@ export const createTodo =
         userTokenId(token)
       );
       console.log("I'm an => ", res);
-      dispatch(todoAdded(res.config.data))
+      dispatch(todoAdded(res))
     } catch (err) {
       dispatch({ type: actions.TODO_FAIL, payload: err.message });
     }
