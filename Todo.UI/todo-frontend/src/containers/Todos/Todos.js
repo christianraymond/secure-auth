@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import styled from 'styled-components';
+import React, { useState, useEffect } from "react";
+import { compose } from "redux";
+import { connect } from "react-redux";
+import styled from "styled-components";
 
-import Heading from '../../components/UI/Headings/Heading';
-import { Container } from '../../hoc/layout/elements';
-import InputTodo from './InputTodo/InputTodo';
-import Button from '../../components/UI/Forms/Button/Button';
-import Loader from '../../components/UI/Loader/Loader';
-import Todo from './Todo/Todo';
-import { getTodos } from '../../store/actions/todoActions';
+import Heading from "../../components/UI/Headings/Heading";
+import { Container } from "../../hoc/layout/elements";
+import InputTodo from "./InputTodo/InputTodo";
+import Button from "../../components/UI/Forms/Button/Button";
+import Loader from "../../components/UI/Loader/Loader";
+import Todo from "./Todo/Todo";
+import { getTodos } from "../../store/actions/todoActions";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -35,9 +35,16 @@ const Content = styled.div`
   margin-top: 2rem;
 `;
 
-const Todos = props => {
+const Todos = (props) => {
   const [isAdding, setIsAdding] = useState(false);
+  // debugger
   const { todos, token } = props;
+
+  useEffect(() => {
+    getTodos(props.token);
+    console.log('mounted !')
+  }, [todos]);
+
   let content;
   if (!todos) {
     content = (
@@ -67,13 +74,12 @@ const Todos = props => {
         {todos[token].todos
           .slice(0)
           .reverse()
-          .map(todo => (
+          .map((todo) => (
             <Todo key={todo.id} todo={todo} />
           ))}
       </Content>
     );
   }
-
   return (
     <Wrapper>
       <Container>
@@ -88,7 +94,7 @@ const Todos = props => {
             Add Todo
           </Button>
           <InputTodo opened={isAdding} close={() => setIsAdding(false)} />
-          {content}
+          {todos}
         </InnerWrapper>
       </Container>
     </Wrapper>
@@ -98,9 +104,9 @@ const Todos = props => {
 const mapStateToProps = (state) => ({
   todos: state.todos.todos,
   token: state.auth.token,
-  error: state.error
+  error: state.error,
 });
 
 const mapDispatchToProps = {};
 
-export default(connect(mapStateToProps, mapDispatchToProps)(Todos))
+export default connect(mapStateToProps, mapDispatchToProps)(Todos);
