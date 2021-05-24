@@ -40,9 +40,7 @@ const TodoSchema = Yup.object().shape({
 });
 
 const InputTodo = ({ editTodo, close, opened, createTodo, loading, error, editTodoAction, token}) => {
-
   const loadingText = editTodo ? 'Editing...' : 'Creatinging...';
-
   return (
     <>
       <Modal opened={opened} close={close}>
@@ -63,7 +61,7 @@ const InputTodo = ({ editTodo, close, opened, createTodo, loading, error, editTo
           }}
           validationSchema={TodoSchema}
           onSubmit={async (todoValues, { setSubmitting, resetForm }) => {
-            const res = editTodo ? await editTodoAction(editTodo.id, todoValues) : await createTodo(todoValues, token);
+            const res = editTodo ? await editTodo(editTodo.id, todoValues) : await createTodo(todoValues, token);
             if (res) {
               close();
             }

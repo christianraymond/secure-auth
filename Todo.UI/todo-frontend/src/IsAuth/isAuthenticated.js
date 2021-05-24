@@ -2,9 +2,11 @@
 
 import {
   ADD_TODO_SUCCESS,
+  DELETE_TODO_SUCCESS,
   IS_LOADING,
   LOGIN_USER_SUCCESS,
   LOGOUT,
+  TODO_LIST,
   USER_MEMBER,
 } from "../store/actions/actionTypes";
 
@@ -15,12 +17,26 @@ export const isAuthenticated = (user) => {
   };
 };
 
+export const todoList = (todo) => {
+  return {
+    type: TODO_LIST,
+    payload: todo
+  };
+};
+
 export const todoAdded = (todo) => {
   return {
     type: ADD_TODO_SUCCESS,
     payload: todo,
   };
 };
+
+export const todoDelete = (id) => {
+  return {
+    type: DELETE_TODO_SUCCESS,
+    payload: id,
+  }
+}
 
 export const userMemberAuth = (payload) => {
   return {

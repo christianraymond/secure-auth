@@ -16,6 +16,7 @@ export const ADD_TODO_SUCCESS = 'ADD_TODO_SUCCESS';
 export const TODO_GET = 'TODO_GET';
 export const TODO_FAIL = 'ADD_TODO_FAIL';
 export const TODO_LIST = 'TODO_LIST';
+export const EDIT_TODO = 'EDIT_TODO';
 
 export const DELETE_TODO_START = 'DELETE_TODO_START';
 export const DELETE_TODO_SUCCESS = 'DELETE_TODO_SUCCESS';

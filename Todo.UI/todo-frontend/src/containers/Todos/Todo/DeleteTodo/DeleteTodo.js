@@ -38,7 +38,7 @@ const DeleteTodo = ({ show, close, todo, deleteTodo, error, loading }) => {
       <Heading bold size="h4" color="white">
         Are you sure you want to delete this todo?
       </Heading>
-      <TodoWrapper>{todo.todo}</TodoWrapper>
+      <TodoWrapper>{todo}</TodoWrapper>
       <ButtonsWrapper>
         <Button
           contain
@@ -63,8 +63,8 @@ const DeleteTodo = ({ show, close, todo, deleteTodo, error, loading }) => {
 };
 
 const mapStateToProps = ({ todos }) => ({
-  error: todos.deleteTodo.error,
-  loading: todos.deleteTodo.loading,
+  error: todos.todos.error,
+  loading: todos.todos.loading,
 });
 
 const mapDispatchToProps = {

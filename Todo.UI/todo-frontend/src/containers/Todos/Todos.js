@@ -37,42 +37,33 @@ const Content = styled.div`
 
 const Todos = (props) => {
   const [isAdding, setIsAdding] = useState(false);
-  debugger;
   const { todos, token } = props;
 
   useEffect(() => {
-    getTodos(props.token);
+    getTodos(todos);
   }, [todos]);
 
   let content;
-  if (!todos) {
+  if (!todos || !token) {
     content = (
       <Content>
         <Loader isWhite />
       </Content>
     );
-  } else if (!todos) {
+  } if (todos.length === 0) {
     content = (
       <Content>
         <Heading color="white" size="h2">
-          You have no todos!
-        </Heading>
-      </Content>
-    );
-  } else if (todos === 0) {
-    content = (
-      <Content>
-        <Heading color="white" size="h2">
-          You have no todos!!
+          You have {todos.length} todos!
         </Heading>
       </Content>
     );
   } else {
     content = (
       <Content>
-        {todos.map((todo) => (
-          <Todo key={todo.id} todo={todo} />
-        ))}
+       {Object(todos).map(todo => (
+            <Todo key={todo.id} todo={todo} />
+          ))}
       </Content>
     );
   }

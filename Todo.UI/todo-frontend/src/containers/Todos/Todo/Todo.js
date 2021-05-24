@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 
-import DeleteTodo from './DeleteTodo/DeleteTodo';
-import InputTodo from '../InputTodo/InputTodo';
-import { connect } from 'react-redux';
+import DeleteTodo from "./DeleteTodo/DeleteTodo";
+import InputTodo from "../InputTodo/InputTodo";
+import { createTodo } from "../../../store/actions";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -30,31 +30,36 @@ const Controls = styled.div`
 `;
 
 const editStyles = {
-  color: 'var(--color-main)',
-  margin: '0 .5rem',
-  cursor: 'pointer',
+  color: "var(--color-main)",
+  margin: "0 .5rem",
+  cursor: "pointer",
 };
 
 const deleteStyles = {
-  color: 'var(--color-errorRed)',
-  margin: '0 .5rem',
-  cursor: 'pointer',
+  color: "var(--color-errorRed)",
+  margin: "0 .5rem",
+  cursor: "pointer",
 };
 
 const isCompleteStyles = {
-  color: 'var(--color-errorRed)',
-  margin: '0 .5rem',
-  cursor: 'pointer',
+  color: "var(--color-errorRed)",
+  margin: "0 .5rem",
+  cursor: "pointer",
 };
 
 const Todo = (props) => {
   const [isDeleting, setisDeleting] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
-  const { todo } = props;
+
+  const { todo, token } = props;
+  useEffect(() => {
+    createTodo(token, todo);
+  }, [todo]);
+
   return (
     <Wrapper>
-      {todo.title}
+       {todo}
       <Controls>
         <i
           className="fas fa-edit"
@@ -66,7 +71,7 @@ const Todo = (props) => {
           style={deleteStyles}
           onClick={() => setisDeleting(true)}
         />
-         <i
+        <i
           className="fas fa-check-square"
           style={isCompleteStyles}
           onClick={() => setIsComplete(true)}
