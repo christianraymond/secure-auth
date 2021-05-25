@@ -7,6 +7,7 @@ import {
   AUTH_END,
   LOGOUT,
   USER_MEMBER,
+  REDIRECT,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -23,11 +24,14 @@ export default (state = initialState, action) => {
     case AUTH_START:
       return { ...state, loading: true };
     case REGISTER_USER_SUCCESS:
+      localStorage.setItem("token", action.payload.data.token);
       return {
         ...state,
+        token: action.payload.data.token,
+        user: action.payload.config.data,
         error: false,
         loading: false,
-        user: action.payload,
+        isLoggedIn: true,
       };
     case LOGIN_USER_SUCCESS:
       localStorage.setItem("token", action.payload.data.token);
@@ -54,7 +58,6 @@ export default (state = initialState, action) => {
     case LOGOUT:
       localStorage.removeItem("user");
       return { ...state, isLoggedIn: false, user: {} };
-
     default:
       return state;
   }

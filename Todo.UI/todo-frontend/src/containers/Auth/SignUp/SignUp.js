@@ -35,7 +35,8 @@ const SignUpSchema = Yup.object().shape({
     .required("You need to confirm your password."),
 });
 
-const SignUp = ({ signUp, loading, error, cleanUp }) => {
+const SignUp = ({ signUp, loading, error, redirectTo }) => {
+  const history = createBrowserHistory()
   return (
     <Formik
       initialValues={{
@@ -109,11 +110,6 @@ const SignUp = ({ signUp, loading, error, cleanUp }) => {
 //   loading: auth.loading,
 //   error: auth.error,
 // });
-
-// const mapDispatchToProps = {
-//   signUp: actions.signUp,
-//   cleanUp: actions.clean,
-// };
 
 const mapDispatchToProps = (dispatch) => ({
   signUp: (userInfo) => dispatch(actions.signUp(userInfo)),

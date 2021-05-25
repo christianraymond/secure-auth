@@ -8,6 +8,7 @@ import {
   LOGOUT,
   TODO_LIST,
   USER_MEMBER,
+  REGISTER_USER_SUCCESS,
 } from "../store/actions/actionTypes";
 
 export const isAuthenticated = (user) => {
@@ -16,6 +17,14 @@ export const isAuthenticated = (user) => {
     payload: user,
   };
 };
+
+export const isRegistered = (user) => {
+  return {
+    type: REGISTER_USER_SUCCESS,
+    payload: user,
+  };
+};
+
 
 export const todoList = (todo) => {
   return {

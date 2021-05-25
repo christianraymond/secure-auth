@@ -1,6 +1,6 @@
 import * as actions from "./actionTypes";
 import axios from "axios";
-import { isAuthenticated, userMemberAuth } from "../../IsAuth/isAuthenticated";
+import { isAuthenticated, isRegistered, userMemberAuth } from "../../IsAuth/isAuthenticated";
 
 const ENPOINT_URL = "http://localhost:5000";
 const REG_USER_API = `${ENPOINT_URL}/api/auth/register`;
@@ -11,7 +11,7 @@ export const signUp = (userData) => async (dispatch) => {
   try {
     const res = await axios.post(REG_USER_API, userData);
     console.log(res);
-    dispatch({ type: actions.REGISTER_USER_SUCCESS });
+    dispatch(isRegistered(res));
   } catch (err) {
     dispatch({ type: actions.AUTH_FAIL, payload: err.message });
   } finally {
