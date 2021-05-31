@@ -10,7 +10,6 @@ export const signUp = (userData) => async (dispatch) => {
   dispatch({ type: actions.AUTH_START });
   try {
     const res = await axios.post(REG_USER_API, userData);
-    console.log(res);
     dispatch(isRegistered(res));
   } catch (err) {
     dispatch({ type: actions.AUTH_FAIL, payload: err.message });
@@ -31,7 +30,6 @@ export const signIn = (user) => async (dispatch) => {
   } catch (err) {
     dispatch({ type: actions.AUTH_FAIL, payload: err.message });
   } finally {
-    console.log("Action dispatched");
     dispatch({ type: actions.AUTH_END });
   }
 };

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { compose } from "redux";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
@@ -42,7 +41,6 @@ const Todos = (props) => {
   useEffect(() => {
     getTodos(todos);
   }, [todos]);
-
   let content;
   if (!todos || !token) {
     content = (
@@ -61,9 +59,7 @@ const Todos = (props) => {
   } else {
     content = (
       <Content>
-       {Object(todos).map(todo => (
-            <Todo key={todo.id} todo={todo} />
-          ))}
+          <Todo todo={todos}/>
       </Content>
     );
   }

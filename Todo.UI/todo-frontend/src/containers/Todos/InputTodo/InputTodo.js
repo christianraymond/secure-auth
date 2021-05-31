@@ -4,7 +4,6 @@ import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
 import styled from 'styled-components';
 
-
 import Button from '../../../components/UI/Forms/Button/Button';
 import Heading from '../../../components/UI/Headings/Heading';
 import Modal from '../../../components/UI/Modal/Modal';
@@ -39,7 +38,7 @@ const TodoSchema = Yup.object().shape({
     .required('This field is required')
 });
 
-const InputTodo = ({ editTodo, close, opened, createTodo, loading, error, editTodoAction, token}) => {
+const InputTodo = ({ editTodo, close, opened, createTodo, loading, error, token}) => {
   const loadingText = editTodo ? 'Editing...' : 'Creatinging...';
   return (
     <>

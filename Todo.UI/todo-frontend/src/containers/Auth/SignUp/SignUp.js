@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { createBrowserHistory } from "history";
+import React from "react";
 import { connect } from "react-redux";
 import { Formik, Field } from "formik";
 import * as Yup from "yup";
@@ -36,7 +35,6 @@ const SignUpSchema = Yup.object().shape({
 });
 
 const SignUp = ({ signUp, loading, error, redirectTo }) => {
-  const history = createBrowserHistory()
   return (
     <Formik
       initialValues={{

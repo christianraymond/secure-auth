@@ -1,5 +1,5 @@
 import axios from "axios";
-import { todoAdded, todoDelete, todoList } from "../../IsAuth/isAuthenticated";
+import { todoAdded,  todoList } from "../../IsAuth/isAuthenticated";
 import * as actions from "./actionTypes";
 
 const TODO_API = "http://localhost:5000";
@@ -8,7 +8,7 @@ const APIKEY = `${TODO_API}/api/todos`;
 const userTokenId = (token) => {
   return {
     headers: {
-      Authorization: `bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   };
 };
@@ -23,7 +23,6 @@ export const createTodo =(dataObject, token) => async (dispatch) => {
       dispatch({ type: actions.TODO_FAIL, payload: err.message });
     }
   };
-
 //List Added Todos
 export const getTodos = (token) => async (dispatch) => {
   dispatch({ type: actions.GETTING_TODOS });

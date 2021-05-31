@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import DeleteTodo from "./DeleteTodo/DeleteTodo";
 import InputTodo from "../InputTodo/InputTodo";
-import { createTodo } from "../../../store/actions";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -52,11 +51,7 @@ const Todo = (props) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
 
-  const { todo, token } = props;
-  useEffect(() => {
-    createTodo(token, todo);
-  }, [todo]);
-
+  const { todo } = props;
   return (
     <Wrapper>
        {todo}

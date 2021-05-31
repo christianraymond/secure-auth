@@ -24,19 +24,17 @@ export const isRegistered = (user) => {
     payload: user,
   };
 };
-
+export const todoAdded = (todos) => {
+  return {
+    type: ADD_TODO_SUCCESS,
+    payload: todos,
+  };
+};
 
 export const todoList = (todo) => {
   return {
     type: TODO_LIST,
     payload: todo
-  };
-};
-
-export const todoAdded = (todo) => {
-  return {
-    type: ADD_TODO_SUCCESS,
-    payload: todo,
   };
 };
 

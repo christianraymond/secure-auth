@@ -7,14 +7,13 @@ import {
   AUTH_END,
   LOGOUT,
   USER_MEMBER,
-  REDIRECT,
 } from "../actions/actionTypes";
 
 const initialState = {
-  token: "",
+  token: localStorage.getItem('token'),
   user: {},
   user_member: {},
-  isLoggedIn: !!localStorage.getItem("user"),
+  isLoggedIn: !!localStorage.getItem("token"),
   error: null,
   loading: false,
 };
@@ -34,7 +33,7 @@ export default (state = initialState, action) => {
         isLoggedIn: true,
       };
     case LOGIN_USER_SUCCESS:
-      localStorage.setItem("token", action.payload.data.token);
+      localStorage.setItem("TOKEN", action.payload.data.token);
       return {
         ...state,
         token: action.payload.data.token,
